@@ -21,3 +21,7 @@ export interface GenerateExperienceDescription {
   techStack: string[];
   jobRole: string;
 }
+
+export interface ImproveContent {
+  content: string;
+}
