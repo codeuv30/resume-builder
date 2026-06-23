@@ -21,6 +21,6 @@ export interface LoginBody {
 }
 
 export interface JWTPayload {
-    userId: String,
-    email?: String 
+    userId: string,
+    email?: string 
 }

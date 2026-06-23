@@ -5,7 +5,7 @@ import { LoginBody } from "@/types/user.types";
 import { generateJWT } from "@/lib/jwt";
 import { connectToDB } from "@/lib/mongodb";
 
-async function POST(req: NextResponse) {
+export async function POST(req: NextResponse) {
   try {
     await connectToDB();
 
@@ -37,7 +37,7 @@ async function POST(req: NextResponse) {
       );
     }
 
-    const user = await User.findOne({ email, password });
+    const user = await User.findOne({ email });
 
     if (!user) {
       return NextResponse.json(
@@ -66,7 +66,7 @@ async function POST(req: NextResponse) {
     const response = NextResponse.json<ApiResponse>(
       {
         success: true,
-        message: "User registered",
+        message: "User logged in",
         data: {
           user: {
             _id: user._id,
@@ -77,7 +77,7 @@ async function POST(req: NextResponse) {
           },
         },
       },
-      { status: 201 },
+      { status: 200 },
     );
 
     response.cookies.set("token", token, {
@@ -89,7 +89,7 @@ async function POST(req: NextResponse) {
 
     return response;
   } catch (error) {
-    console.log("Error in register api: ", error);
+    console.log("Error in login api: ", error);
 
     return NextResponse.json<ApiResponse>(
       {

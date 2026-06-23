@@ -5,11 +5,23 @@ import { RegisterBody } from "@/types/user.types";
 import { NextRequest, NextResponse } from "next/server";
 import { generateJWT } from "@/lib/jwt";
 
-async function POST(req: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
     await connectToDB();
 
     const body: RegisterBody = await req.json();
+
+    if(!body) {
+      return NextResponse.json<ApiResponse>(
+        {
+          success: false,
+          message: "All fields are required",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
 
     const { name, email, password, mobile } = body;
 

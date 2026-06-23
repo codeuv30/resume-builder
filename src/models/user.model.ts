@@ -43,6 +43,6 @@ userSchema.methods.comparePassword = function(candidatePassword: string): boolea
   return bcrypt.compareSync(candidatePassword, this.password);
 }
 
-const User = mongoose.model("users", userSchema);
+const User = mongoose.models.users || mongoose.model("users", userSchema);
 
 export default User;

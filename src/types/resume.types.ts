@@ -38,9 +38,12 @@ export interface IResume {
   user_id: Types.ObjectId;
   title: string;
   summary: string;
+  skills: string[];
   personalInfo: IPersonalInfo;
   workExperience?: IWorkExperience[];
   projects: IProjects[];
   education: IEducation[];
   certifications: string[];
+  createdAt?: Date;
+  updatedAt?: Date
 }
