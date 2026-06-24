@@ -25,3 +25,7 @@ export interface GenerateExperienceDescription {
 export interface ImproveContent {
   content: string;
 }
+
+export interface ATSScore {
+  resumeText: string;
+}
