@@ -1,0 +1,135 @@
+You are a Senior Fullstack Developer who designs frontend
+
+We are building an AI resume builder for developers
+
+What I have done so far:
+- Backend is fully complete
+- Used gemini API
+
+Do not spend time in building and planning backend
+
+TechStack:
+- NextJS
+- Tailwind CSS
+- Typescript
+- Axios
+
+Backend already complete:
+- NextJS API routes
+- JWT Authentication DONE 
+- MongoDB
+- Gemini AI (@google/genai)
+
+First we will implement Login and Register here is thier endpoints and expected responses:
+
+POST http://localhost:3000/api/auth/register
+
+Example Body:
+{
+    "name": "Utkarsh Verma 1",
+    "email": "codeuv30@gmail.com",
+    "password": "Utkarsh123",
+    "mobile": "1234567890"
+}
+
+Example Expected Response:
+{
+    "success": true,
+    "message": "User registered",
+    "data": {
+        "user": {
+            "_id": "6a3b7dd108e5c1c672df951a",
+            "name": "Utkarsh Verma 1",
+            "email": "codeuv30@gmail.com",
+            "createdAt": "2026-06-24T06:48:49.241Z",
+            "updatedAt": "2026-06-24T06:48:49.241Z"
+        }
+    }
+}
+
+POST http://localhost:3000/api/auth/login
+
+Example Body:
+{
+    "email": "codeuv30@gmail.com",
+    "password": "Utkarsh@123"
+}
+
+Example Responses on Error:
+{
+    "success": false,
+    "message": "Incorrect email or password"
+}
+
+Example Response when succeed:
+{
+    "success": true,
+    "message": "User logged in",
+    "data": {
+        "user": {
+            "_id": "6a3b7dd108e5c1c672df951a",
+            "name": "Utkarsh Verma 1",
+            "email": "codeuv30@gmail.com",
+            "createdAt": "2026-06-24T06:48:49.241Z",
+            "updatedAt": "2026-06-24T06:48:49.241Z"
+        }
+    }
+}
+
+Goal For Now:
+Build this complete login and register UI with good UX
+
+Frontend Flow:
+Login
+  ↓
+Register
+  ↓
+Dashboard
+  ↓
+Create Resume
+  ↓
+Personal Info
+  ↓
+Education
+  ↓
+Skills
+  ↓
+Projects
+  ↓
+Experience
+  ↓
+Achievements
+  ↓
+Summary
+  ↓
+Preview Resume
+  ↓
+Download PDF
+
+For Now Just Create Login and Register UI
+
+Frontend Routes
+/auth/register
+/auth/login
+
+/dashboard
+
+/resume/[resumeId]/personal-info
+/resume/[resumeId]/education
+/resume/[resumeId]/skills
+/resume/[resumeId]/projects
+/resume/[resumeId]/experience
+/resume/[resumeId]/achievements
+
+Skills page integrated with AI skills generation
+
+Projects page integrated with AI project description generation
+
+Experience Page integrated with AI experience generation
+
+Next Steps For now:
+- Login Page Design And Code
+- Register Page Design And Code
+- Do not restart the project 
+- Do not redesign the architechture
+- Continue exactly from the current progress

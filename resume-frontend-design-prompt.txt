@@ -1,0 +1,103 @@
+now make resume page here are all the endpoints for resume:
+
+POST http://localhost:3000/api/resume/create
+
+Example body: no body required only in this api
+
+Example Response
+{
+    "success": true,
+    "message": "Resume created successfully",
+    "data": {
+        "user_id": "6a3b7dd108e5c1c672df951a",
+        "title": "",
+        "summary": "",
+        "personalInfo": {
+            "_id": "6a3ba6d7ca389c68216c4962"
+        },
+        "education": [],
+        "workExperience": [],
+        "projects": [],
+        "skills": [],
+        "certifications": [],
+        "_id": "6a3ba6d7ca389c68216c4961",
+        "createdAt": "2026-06-24T09:43:51.245Z",
+        "updatedAt": "2026-06-24T09:43:51.245Z",
+        "__v": 0
+    }
+}
+
+
+Example Response on Error:
+{
+    "success": false,
+    "message": "Unauthorized"
+}
+
+GET http://localhost:3000/api/resume/${resumeId}
+
+example request on: http://localhost:3000/api/resume/6a3a9200f6f1b99fb9fabe59
+
+Example Response on error:
+{
+    "success": false,
+    "message": "Token not found",
+    "error": {
+        "error": {}
+    }
+}
+
+Example Response on succeed:
+{
+    "success": true,
+    "message": "Successfully fetched Resume",
+    "data": {
+        "_id": "6a3a9200f6f1b99fb9fabe59",
+        "user_id": "6a3a8fedf6f1b99fb9fabe57",
+        "title": "",
+        "summary": "A seasoned Senior Full Stack Developer with a proven track record delivering robust, scalable web applications. Expertise spans React, Node.js, and TypeScript, backed by strong database skills in PostgreSQL. Masterfully architects cloud-native solutions leveraging AWS and Docker, with advanced proficiency in GraphQL APIs. Consistently drives project success, optimizing system performance and enhancing user engagement across complex platforms.",
+        "personalInfo": {
+            "_id": "6a3a9200f6f1b99fb9fabe5a"
+        },
+        "education": [],
+        "workExperience": [],
+        "projects": [],
+        "skills": [],
+        "certifications": [],
+        "createdAt": "2026-06-23T14:02:40.476Z",
+        "updatedAt": "2026-06-24T06:37:26.591Z",
+        "__v": 0
+    }
+}
+
+PATCH http://localhost:3000/api/resume/${resumeId}
+
+example request on endpoint: PATCH http://localhost:3000/api/resume/6a3a9200f6f1b99fb9fabe59
+
+example body:
+{
+    "summary": "A seasoned Senior Full Stack Developer with a proven track record delivering robust, scalable web applications. Expertise spans React, Node.js, and TypeScript, backed by strong database skills in PostgreSQL. Masterfully architects cloud-native solutions leveraging AWS and Docker, with advanced proficiency in GraphQL APIs. Consistently drives project success, optimizing system performance and enhancing user engagement across complex platforms."
+}
+
+Example Response:
+{
+    "success": true,
+    "message": "Successfully made changes to your resume.",
+    "data": {
+        "_id": "6a3a9200f6f1b99fb9fabe59",
+        "user_id": "6a3a8fedf6f1b99fb9fabe57",
+        "title": "",
+        "summary": "A seasoned Senior Full Stack Developer with a proven track record delivering robust, scalable web applications. Expertise spans React, Node.js, and TypeScript, backed by strong database skills in PostgreSQL. Masterfully architects cloud-native solutions leveraging AWS and Docker, with advanced proficiency in GraphQL APIs. Consistently drives project success, optimizing system performance and enhancing user engagement across complex platforms.",
+        "personalInfo": {
+            "_id": "6a3a9200f6f1b99fb9fabe5a"
+        },
+        "education": [],
+        "workExperience": [],
+        "projects": [],
+        "skills": [],
+        "certifications": [],
+        "createdAt": "2026-06-23T14:02:40.476Z",
+        "updatedAt": "2026-06-24T09:52:24.231Z",
+        "__v": 0
+    }
+}

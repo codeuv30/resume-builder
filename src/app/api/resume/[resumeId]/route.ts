@@ -20,6 +20,10 @@ export async function GET(
       user_id: userId,
     });
 
+    console.log("RESUME", resume);
+    console.log("USER_ID", userId);
+    console.log("RESUME_ID", resumeId);
+
     if (!resume) {
       return NextResponse.json<ApiResponse>(
         {
@@ -38,13 +42,13 @@ export async function GET(
       },
       { status: 200 },
     );
-  } catch (error) {
+  } catch (error: any) {
     console.log("Error in get resume api", error);
 
     return NextResponse.json<ApiResponse>(
       {
         success: false,
-        message: "Error occured while fetching your resume",
+        message: error.message || "Error occured while fetching your resume",
         error: { error },
       },
       { status: 500 },
@@ -91,13 +95,13 @@ export async function PATCH(
       },
       { status: 200 },
     );
-  } catch (error) {
+  } catch (error: any) {
     console.log("Error in patch resume api", error);
 
     return NextResponse.json<ApiResponse>(
       {
         success: false,
-        message: "Error occured while making changes into your resume",
+        message:  error.message || "Error occured while making changes into your resume",
         error: { error },
       },
       { status: 500 },
