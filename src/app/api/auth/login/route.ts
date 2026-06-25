@@ -5,7 +5,7 @@ import { LoginBody } from "@/types/user.types";
 import { generateJWT } from "@/lib/jwt";
 import { connectToDB } from "@/lib/mongodb";
 
-export async function POST(req: NextResponse) {
+export async function POST(req: NextRequest) {
   try {
     await connectToDB();
 
