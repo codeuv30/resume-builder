@@ -52,7 +52,7 @@ export function LoginForm() {
           localStorage.setItem('rememberMe', 'true');
         }
 
-        router.push('/resume');
+        router.push('/dashboard');
         router.refresh();
       }
     } catch (error: any) {

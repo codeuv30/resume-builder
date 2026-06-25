@@ -46,7 +46,7 @@ export function RegisterForm() {
       if (response.data.success) {
         setRegistrationSuccess(true);
         setTimeout(() => {
-          router.push('/resume');
+          router.push('/dashboard');
         }, 2000);
       }
     } catch (error: any) {
@@ -67,7 +67,7 @@ export function RegisterForm() {
         </div>
         <h3 className="text-xl font-semibold text-slate-900">Account Created!</h3>
         <p className="text-slate-500">
-          Redirecting you to login...
+          Redirecting you to dashboard...
         </p>
       </div>
     );
