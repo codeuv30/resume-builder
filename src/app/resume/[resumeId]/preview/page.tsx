@@ -653,7 +653,7 @@ function loadScript(src: string): Promise<void> {
   });
 }
 
-function useDownloadPDF(ref: React.RefObject<HTMLDivElement>, fileName: string) {
+function useDownloadPDF(ref: React.RefObject<HTMLDivElement | null>, fileName: string) {
   const [downloading, setDownloading] = useState(false);
   const [error, setError]             = useState<string | null>(null);
 
