@@ -128,3 +128,16 @@
     @apply font-sans;
   }
 }
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: white; }
+  @page { margin: 12mm 14mm; size: A4; }
+  #resume-paper {
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+  }
+}

@@ -15,7 +15,9 @@
     "bcrypt": "^6.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "html2canvas-pro": "^2.2.0",
     "jsonwebtoken": "^9.0.3",
+    "jspdf": "^4.2.1",
     "lucide-react": "^1.21.0",
     "mongoose": "^9.7.2",
     "next": "16.2.9",
@@ -37,6 +39,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
+    "postcss-lab-function": "^8.0.5",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
