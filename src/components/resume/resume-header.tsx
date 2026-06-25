@@ -4,9 +4,14 @@ import Link from 'next/link';
 import { useResume } from '@/hooks/use-resume';
 import { Button } from '@/components/ui/button';
 import { Download, Save, Loader2 } from 'lucide-react';
+import { useResumeContext } from '@/contexts/resume-context';
 
-export function ResumeHeader({ resumeId }: { resumeId: string }) {
-  const { resume, isSaving } = useResume(resumeId);
+interface ResumeHeaderProps {
+  resumeId: string;  // <-- Use prop
+}
+
+export function ResumeHeader({ resumeId }: ResumeHeaderProps) {
+  const { resume, isSaving } = useResumeContext();
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-slate-200 px-4 lg:px-6 py-3 flex items-center justify-between">

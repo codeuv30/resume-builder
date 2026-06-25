@@ -61,28 +61,42 @@ export async function PATCH(
   { params }: { params: Promise<{ resumeId: string }> },
 ) {
   try {
-
     const body = await req.json();
-
     await connectToDB();
-
     const userId = await getCurrentUser();
-
     const { resumeId } = await params;
 
-    const updatedResume = await Resume.findOneAndUpdate({
-        _id: resumeId,
-        user_id: userId
-    }, {
-        $set: body
-    }, { new: true, runValidators: true });
+    // Build $set with dot notation to merge nested objects instead of replacing
+    const setObject: Record<string, any> = {};
+    
+    for (const [key, value] of Object.entries(body)) {
+      if (key === 'personalInfo' && typeof value === 'object' && value !== null) {
+        // Merge personalInfo fields individually
+        for (const [subKey, subValue] of Object.entries(value)) {
+          setObject[`personalInfo.${subKey}`] = subValue;
+        }
+      } else if (Array.isArray(value)) {
+        // For arrays (education, skills, etc.), replace entirely
+        setObject[key] = value;
+      } else {
+        setObject[key] = value;
+      }
+    }
+
+    console.log('PATCH body received:', body);
+    console.log('PATCH setObject:', setObject);
+
+    const updatedResume = await Resume.findOneAndUpdate(
+      { _id: resumeId, user_id: userId },
+      { $set: setObject },
+      { new: true, runValidators: true }
+    );
+
+    console.log('PATCH updated personalInfo:', updatedResume?.personalInfo);
 
     if (!updatedResume) {
       return NextResponse.json<ApiResponse>(
-        {
-          success: false,
-          message: "Resume does not exists",
-        },
+        { success: false, message: "Resume does not exist" },
         { status: 400 },
       );
     }
@@ -90,18 +104,17 @@ export async function PATCH(
     return NextResponse.json<ApiResponse>(
       {
         success: true,
-        message: "Successfully made changes to your resume.",
+        message: "Successfully updated your resume.",
         data: updatedResume,
       },
       { status: 200 },
     );
   } catch (error: any) {
     console.log("Error in patch resume api", error);
-
     return NextResponse.json<ApiResponse>(
       {
         success: false,
-        message:  error.message || "Error occured while making changes into your resume",
+        message: error.message || "Error occurred while updating your resume",
         error: { error },
       },
       { status: 500 },

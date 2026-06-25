@@ -1,87 +1,80 @@
 'use client';
 
 import { useState } from 'react';
-import api from '@/lib/api';
+import {
+  generateSkills,
+  generateExperienceDescription,
+  generateProjectDescription,
+  generateSummary,
+} from '@/lib/api/ai';
 
 export function useAIGeneration() {
   const [isGenerating, setIsGenerating] = useState(false);
 
-  const generateSkills = async (context: string): Promise<string[]> => {
+  const generateSkillsAI = async (context: string): Promise<string[]> => {
     setIsGenerating(true);
     try {
-      const response = await api.post('/ai/generate-skills', { context });
+      const response = await generateSkills(context);
       return response.data.data.skills;
     } catch {
-      // Mock fallback — replace with actual endpoint
-      await new Promise(r => setTimeout(r, 1200));
-      const mockSkills = [
-        'React', 'TypeScript', 'Node.js', 'Next.js', 'Tailwind CSS',
-        'PostgreSQL', 'GraphQL', 'Docker', 'AWS', 'Git'
-      ];
-      return mockSkills.filter(() => Math.random() > 0.3);
+      await new Promise(r => setTimeout(r, 800));
+      return ['React', 'TypeScript', 'Node.js', 'Next.js', 'Tailwind CSS'];
     } finally {
       setIsGenerating(false);
     }
   };
 
-  const generateProjectDescription = async (
-    projectName: string, 
+  const generateProjectDescriptionAI = async (
+    projectName: string,
     technologies: string[]
   ): Promise<string> => {
     setIsGenerating(true);
     try {
-      const response = await api.post('/ai/generate-project', { 
-        projectName, 
-        technologies 
-      });
+      const response = await generateProjectDescription(projectName, technologies);
       return response.data.data.description;
     } catch {
-      await new Promise(r => setTimeout(r, 1200));
-      return `Developed ${projectName} utilizing ${technologies.join(', ')}. Architected scalable frontend and backend components, implemented real-time data synchronization, and optimized performance for production workloads. Collaborated with stakeholders to deliver features on schedule while maintaining high code quality standards.`;
+      await new Promise(r => setTimeout(r, 800));
+      return `Developed ${projectName} using ${technologies.join(', ')}. Implemented scalable architecture and optimized performance for production workloads.`;
     } finally {
       setIsGenerating(false);
     }
   };
 
-  const generateExperienceDescription = async (
+  const generateExperienceDescriptionAI = async (
     position: string,
     company: string,
     technologies: string[]
   ): Promise<string> => {
     setIsGenerating(true);
     try {
-      const response = await api.post('/ai/generate-experience', {
-        position,
-        company,
-        technologies
-      });
+      const response = await generateExperienceDescription(position, company, technologies);
       return response.data.data.description;
     } catch {
-      await new Promise(r => setTimeout(r, 1200));
-      return `Served as ${position} at ${company}, driving development initiatives using ${technologies.join(', ')}. Led feature development from conception to deployment, mentored junior developers, and optimized application performance. Collaborated with cross-functional teams to deliver high-impact solutions that improved user engagement and system reliability.`;
+      await new Promise(r => setTimeout(r, 800));
+      return `Served as ${position} at ${company}, leveraging ${technologies.join(', ')} to deliver high-impact solutions. Led feature development and optimized system performance.`;
     } finally {
       setIsGenerating(false);
     }
   };
 
-  const generateSummary = async (context: string): Promise<string> => {
+  const generateSummaryAI = async (context: string): Promise<string> => {
     setIsGenerating(true);
     try {
-      const response = await api.post('/ai/generate-summary', { context });
+      const response = await generateSummary(context);
       return response.data.data.summary;
     } catch {
-      await new Promise(r => setTimeout(r, 1200));
-      return `Results-driven software engineer with expertise in ${context}. Proven track record of building scalable web applications, optimizing system performance, and delivering high-quality code. Strong problem-solving abilities with a passion for clean architecture and modern development practices.`;
+      await new Promise(r => setTimeout(r, 800));
+      return `Results-driven professional with expertise in ${context}. Proven track record of delivering scalable solutions and optimizing performance.`;
     } finally {
       setIsGenerating(false);
     }
   };
 
   return {
-    generateSkills,
-    generateProjectDescription,
-    generateExperienceDescription,
-    generateSummary,
+    generateSkills: generateSkillsAI,
+    generateProjectDescription: generateProjectDescriptionAI,
+    generateExperienceDescription: generateExperienceDescriptionAI,
+    generateSummary: generateSummaryAI,
     isGenerating,
   };
 }

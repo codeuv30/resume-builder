@@ -1,72 +1,50 @@
 import { generateAiResponse } from "@/lib/gemini";
-import { GenerateDescription, GenerateSkills } from "@/types/ai.types";
 import { ApiResponse } from "@/types/api.types";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    const body: GenerateDescription = await req.json();
+    const body = await req.json();
+    const { projectName, technologies } = body;
 
-    const { experienceLevel, jobTitle, techStack } = body;
-
-    if (!experienceLevel || !jobTitle || !techStack) {
+    if (!projectName) {
       return NextResponse.json<ApiResponse>(
-        {
-          success: false,
-          message: "All fields are required",
-        },
+        { success: false, message: "Project name is required" },
         { status: 400 },
       );
     }
 
     const prompt = `
-[ROLE]
-You are a senior technical writer specializing in ATS-optimized project descriptions for software engineers.
+You are a senior developer. Write ONE professional project description paragraph (40-60 words) for:
 
-[TASK]
-Generate ONLY a single professional project description paragraph. No headings, no bullet points, no sections, no labels, no explanations.
+Project: ${projectName}
+Technologies: ${technologies?.join(", ") || "various technologies"}
 
-[INPUT]
-- Job Title: ${jobTitle}
-- Experience Level: ${experienceLevel}
-- Tech Stack Used: ${techStack}
+Rules:
+- Describe technical implementation and impact
+- Include 1 quantifiable outcome
+- Mention key technologies naturally
+- NO first-person pronouns, NO bullet points
+- Past tense
 
-[RULES — STRICT]
-1. Output MUST be exactly ONE paragraph between 40 and 70 words.
-2. Start with a strong action verb (Built, Architected, Developed, Engineered, Designed).
-3. Mention 3-5 technologies from the Tech Stack naturally within the text.
-4. Include 1 quantifiable outcome or measurable impact (e.g., improved performance by X%, reduced load time, scaled to Y users, cut costs by Z%).
-5. Infer a realistic project scope based on the Job Title and Experience Level:
-   - Entry: focused features, smaller scale, learning-oriented
-   - Mid-Level: full module ownership, integration complexity
-   - Senior/Lead: system design, scalability, architecture decisions, mentoring
-6. NO first-person pronouns (I, me, my, we, our).
-7. NO bullet points, numbered lists, or markdown formatting.
-8. NO generic filler like "cutting-edge," "fast-paced environment," "leveraged modern tools."
-9. Write in past tense.
-10. Do not output any text outside the single paragraph description.
+Output ONLY the paragraph.
+`;
 
-[OUTPUT FORMAT — EXACT]
-Architected a microservices-based order processing system using Node.js, Kafka, and PostgreSQL, handling 50K daily transactions with 99.9% uptime and reducing payment failure rate by 35% through idempotent webhook design and circuit breaker patterns.
-    `;
-    const projectDescription = await generateAiResponse(prompt);
+    const description = await generateAiResponse(prompt);
 
     return NextResponse.json<ApiResponse>(
       {
         success: true,
-        message: "Description created",
-        data: { projectDescription },
+        message: "Description generated",
+        data: { description },
       },
       { status: 201 },
     );
   } catch (error) {
-    console.log("error in generate description api", error);
+    console.log("Error in generate project description API", error);
     return NextResponse.json<ApiResponse>(
-      {
-        success: false,
-        message: "Error while generating description",
-      },
-      { status: 400 },
+      { success: false, message: "Error generating description" },
+      { status: 500 },
     );
   }
 }

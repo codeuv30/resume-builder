@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label';
 import { useResume } from '@/hooks/use-resume';
 import { useAIGeneration } from '@/hooks/use-ai';
 import { Input } from '@/components/ui/input';
+import { StepGuard } from '@/components/resume/step-guard';
 
 const summarySchema = z.object({
   title: z.string().min(1, 'Resume title is required'),
@@ -71,6 +72,7 @@ export default function SummaryPage() {
   }
 
   return (
+    <StepGuard resumeId={resumeId}>
     <div className="space-y-6">
       <div>
         <h2 className="text-2xl font-bold text-slate-900">Professional Summary</h2>
@@ -139,5 +141,6 @@ export default function SummaryPage() {
         </div>
       </form>
     </div>
+    </StepGuard>
   );
 }

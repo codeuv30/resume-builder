@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useResume } from '@/hooks/use-resume';
+import { StepGuard } from '@/components/resume/step-guard';
 
 const achievementsSchema = z.object({
   certifications: z.array(z.object({
@@ -66,6 +67,7 @@ export default function AchievementsPage() {
   }
 
   return (
+    <StepGuard resumeId={resumeId}>
     <div className="space-y-6">
       <div>
         <h2 className="text-2xl font-bold text-slate-900">Achievements & Certifications</h2>
@@ -158,5 +160,6 @@ export default function AchievementsPage() {
         </div>
       </form>
     </div>
+    </StepGuard>
   );
 }
